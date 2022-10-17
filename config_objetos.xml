@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+    <archivoConfiguraciones>
+        <listaRecursos>
+            <recurso id="RAM">
+                <nombre> Memoria Ram </nombre>
+                <abreviatura> Memoria Ram </abreviatura>
+                <metrica> Gb </metrica>
+                <tipo> Memoria Primaria </tipo>
+                <valorXhora> 0.75 </valorXhora>
+            </recurso>
+            <recurso id="HDD">
+                <nombre> Disco Duro </nombre>
+                <abreviatura> HDD </abreviatura>
+                <metrica> Gb </metrica>
+                <tipo> Memoria Secundaria </tipo>
+                <valorXhora> 1.5 </valorXhora>
+            </recurso>
+            <recurso id="TG">
+                <nombre> Tarjeta Grafica </nombre>
+                <abreviatura> TG </abreviatura>
+                <metrica> Gb </metrica>
+                <tipo> Memoria Desconocida </tipo>
+                <valorXhora> 4.5 </valorXhora>
+            </recurso>
+        </listaRecursos>
+        <listaCategorias>
+            <categoria id="SERVIDOR">
+                <nombre> SERVIDOR </nombre>
+                <descripcion> SERVIDOR</descripcion>
+                <cargaTrabajo> Media </cargaTrabajo>
+                <listaConfiguraciones>
+                    <configuracion id="COMSEM">
+                        <nombre> COMPUTADORA SENCILLA </nombre>
+                        <descripcion> COMPUTADORA SENCILLA </descripcion>
+                        <recursosConfiguracion>
+                            <recurso id="RAM"> 2 </recurso>
+                            <recurso id="HDD"> 100 </recurso>
+                        </recursosConfiguracion>
+                    </configuracion>
+                        <configuracion id="COMGAM">
+                        <nombre> COMPUTADORA GAMING </nombre>
+                        <descripcion> COMPUTADORA GAMING </descripcion>
+                        <recursosConfiguracion>
+                            <recurso id="RAM"> 10 </recurso>
+                            <recurso id="HDD"> 1000 </recurso>
+                        </recursosConfiguracion>
+                    </configuracion>
+                </listaConfiguraciones>
+            </categoria>
+        </listaCategorias>
+        <listaClientes>
+            <cliente nit="123456789">
+                <nombre> Juan Pablo </nombre>
+                <usuario> juanpi123 </usuario>
+                <clave> hola123@ </clave>
+                <direccion> Villa nueva </direccion>
+                <correoElectronico> juanpa191998@gmail.com </correoElectronico>
+                <listaInstancias>
+                    <instancia id="AAA">
+                        <idConfiguracion> COMSEM </idConfiguracion>
+                        <nombre> recurso 1 </nombre>
+                        <fechaInicio> 08/10/2022</fechaInicio>
+                        <estado> activo </estado>
+                        <fechaFinal> 08/11/2022 </fechaFinal>
+                    </instancia>
+                    <instancia id="BBB">
+                        <idConfiguracion> COMGAM </idConfiguracion>
+                        <nombre> recurso 1 </nombre>
+                        <fechaInicio> 08/10/2022</fechaInicio>
+                        <estado> activo </estado>
+                        <fechaFinal> 08/11/2022 </fechaFinal>
+                    </instancia>
+                </listaInstancias>
+            </cliente>
+        </listaClientes>
+    </archivoConfiguraciones>
