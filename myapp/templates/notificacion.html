@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/styles/main.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Mensaje Enviado exitosamente!!!!!</h1>
+    <div> <h4>Recursos Existentes: {{lista_recursos|length}}</h4></div>
+   <div>
+    <h4>Categorias Existentes: {{lista_categorias|length}}</h4>
+   </div>
+    <div>
+        <h4>Clientes Existentes: {{lista_clientes|length}}</h4>
+    </div>
+    <div> <h4>Recursos Nuevos Creados: {{n_r}}</h4></div>
+    <div>
+     <h4>Categorias Nuevas Creadas: {{n_ca}}</h4>
+    </div>
+     <div>
+         <h4>Clientes Nuevos Creados: {{n_cli}}</h4>
+     </div>   
+
+    <a href="/">Regresar</a>
+</body>
+</html>

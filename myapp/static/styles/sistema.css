@@ -4,7 +4,7 @@ body{
 }
 
 .navbar{
-    background: #404040;
+    background: #8c0f9c;
     padding: 10px 0;
 }
 
@@ -23,7 +23,7 @@ body{
 }
 
 .navbar ul li a:hover{
-    color: aquamarine;
+    color: rgb(223, 17, 223);
 }
 
 .container{
