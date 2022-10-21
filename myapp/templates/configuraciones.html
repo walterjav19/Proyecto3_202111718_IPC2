@@ -41,23 +41,17 @@
 
 <table class="tftable" border="1">
     <tr>
-        <th>nit</th>
+        <th>ID</th>
         <th>nombre</th>
-        <th>usuario</th>
-        <th>clave</th>
-        <th>direccion</th>
-        <th>correo</th>
-        <th>Instancias</th>
+        <th>descripcion</th>+
+        <th>Recursos</th>
     </tr>
-    {% for cliente in clientes %}
+    {% for configuracion in configuraciones %}
     <tr>
-        <td>{{cliente.nit}}</td>
-        <td>{{cliente.nom_cliente}}</td>
-        <td>{{cliente.usuario}}</td>
-        <td>{{cliente.clave}}</td>
-        <td>{{cliente.direccion}}</td>
-        <td>{{cliente.correo}}</td>
-        <td><a href="/mostrar_instancias/{{cliente.num}}">Instancias</a></td>
+        <td>{{configuracion.id}}</td>
+        <td>{{configuracion.nombre}}</td>
+        <td>{{configuracion.descripcion}}</td>
+        <td><a href="/mostrar_recursos_configuraciones/{{configuracion.num}}">Recursos</a></td>
     </tr>
     {% endfor %}
 

@@ -1,11 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 
+from .instancia import Instancia
+
+from .cliente import Cliente
+
+from .recurso import Recurso
+from django.contrib import messages
 from .leer_xml import Leer,lista_objetos_clientes,lista_objetos_categoria,lista_objetos_recursos,listado_objetos_consumo
 import webbrowser as wb
 from .models import Project,Task
 from django.shortcuts import get_object_or_404,render,redirect
-from .forms import CreateNewProject, CreateNewTask,Enviar_Mensaje, Enviar_Mensaje_consumo
+from .forms import Crear_Cliente, CreateNewProject, CreateNewTask,Enviar_Mensaje, Enviar_Mensaje_consumo,Crear_recurso,Crear_Instancias
 
 
 
@@ -78,7 +84,108 @@ def mostrar_clientes(request):
         'clientes': lista_objetos_clientes
     })
 
+def mostrar_instancias(request,num):
+    return render(request,"instancias.html",{
+        'instancias': lista_objetos_clientes[num].lista_instancias
+    })
 
+def mostrar_categorias(request):
+    return render(request,"categorias.html",{
+        'categorias': lista_objetos_categoria
+    })
+lista_dentro_categoria=[]
+def mostrar_configuraciones(request,num):
+    global lista_dentro_categoria
+    lista_dentro_categoria=lista_objetos_categoria[num].lista_configuraciones
+    return render(request,"configuraciones.html",{
+        'configuraciones': lista_objetos_categoria[num].lista_configuraciones
+    })
+    
+
+def mostrar_configuraciones_recursos(request,num):
+    return render(request,"recursos_config.html",{
+        'recursos': lista_dentro_categoria[num].lista_recursos
+    })
+
+def creacion_datos(request):
+    return render(request,"creacion_datos.html")
+
+
+def create_recurso(request):
+    if request.method== 'GET':
+        return render(request,'crear_recurso.html',{
+        'form': Crear_recurso()
+    })
+    else:
+        id=request.POST['id']
+        nombre=request.POST['nombre']
+        abreviatura=request.POST['abreviatura']
+        metrica=request.POST['metrica']
+        tipo=request.POST['tipo']
+        valor=request.POST['valor']
+        objeto_recurso=Recurso(id,nombre,abreviatura,metrica,tipo,valor)
+        lista_objetos_recursos.append(objeto_recurso)
+        messages.success(request,"Revise sus recursos")
+        return redirect('Crear_Recurso')
+
+nit_c=""
+nombre_c=""
+usuario_c=""
+clave_c=""
+direccion_c=""
+correo_c=""
+objt_cli=None
+lista_parametro=[]
+def create_cliente(request):
+    global nit_c,nombre_c,usuario_c,clave_c,direccion_c,correo_c,objt_cli,lista_parametro
+    lista_parametro=[]
+    if request.method== 'GET':
+        return render(request,'crear_clientes.html',{
+        'form': Crear_Cliente()
+    })
+    else:
+        nit_c=request.POST['nit']
+        nombre_c=request.POST['nombre']
+        usuario_c=request.POST['usuario']
+        clave_c=request.POST['clave']
+        direccion_c=request.POST['direccion']
+        correo_c=request.POST['correo']
+        if lista_objetos_clientes==[]:
+            objt_cli=Cliente(nit_c,nombre_c,usuario_c,clave_c,direccion_c,correo_c,None,0)
+            lista_objetos_clientes.append(objt_cli)
+        else:
+            tamanio_lista=len(lista_objetos_clientes)
+            objt_cli=Cliente(nit_c,nombre_c,usuario_c,clave_c,direccion_c,correo_c,None,tamanio_lista)
+            lista_objetos_clientes.append(objt_cli)
+            
+
+        messages.success(request,"Verifique las instancias que quiere crear para este cliente")
+        return redirect('Crear_Instancias')
+
+def create_instancias(request):
+    global nit_c,nombre_c,usuario_c,clave_c,direccion_c,correo_c,objt_cli,lista_parametro
+    
+    if request.method== 'GET':
+        return render(request,'crear_instancias.html',{
+        'form': Crear_Instancias(),
+        'nombre': nombre_c
+    })
+    else:
+        id_instancia=request.POST['id']
+        id_Configuracion=request.POST['id_config']
+        nombre=request.POST['nombre']
+        fecha_Inicio=request.POST['fecha_inicio']
+        estado=request.POST['estado']
+        if estado=='1':
+            estado="Activo"
+        else:
+            estado="Inactivo"    
+        Fecha_Final=request.POST['fecha_final']
+        objt_instancia=Instancia(id_instancia,id_Configuracion,nombre,fecha_Inicio,estado,Fecha_Final)
+        lista_parametro.append(objt_instancia)
+        objt_cli.set_lista_instancias(lista_parametro)
+        messages.success(request,"Revise sus Clientes e instancias")
+        return redirect('Crear_Instancias')
 
 def task(request):
     #task=get_object_or_404(Task,id=id)

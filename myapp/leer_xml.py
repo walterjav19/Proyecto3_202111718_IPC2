@@ -21,6 +21,9 @@ class Leer:
     categorias_nuevas=0
     clientes_nuevos=0
     consumos_nuevos=0
+    num_clientes=0
+    num_categoria=0
+    num_configuracion=0
     def leer_xml_objetos(self,path):
         self.recursos_nuevos=0
         self.categorias_nuevas=0
@@ -60,6 +63,7 @@ class Leer:
 
             #obtenemos las categorias
             for categoria in lista_categorias:
+                self.num_configuracion=0
                 self.categorias_nuevas+=1
                 id_cat=categoria.attrib['id']
                 configs=[]
@@ -78,7 +82,7 @@ class Leer:
                 #dentro de configuracion
                 for config in list_configs:
                     id_config=config.attrib['id']
-                    recurs=[]                    
+                    recurs=[]                   
                     for subelem in config:
                         if subelem.tag=="nombre":
                             nom_config=subelem.text
@@ -90,13 +94,16 @@ class Leer:
                     for recu in list_recu:
                         objeto_config_recurso=Configuracion_Recurso(recu.attrib['id'],recu.text)
                         recurs.append(objeto_config_recurso)
-                    objeto_configuracion=Configuracion(id_config,nom_config,descri_config,recurs)
+                    objeto_configuracion=Configuracion(id_config,nom_config,descri_config,recurs,self.num_configuracion)
                     configs.append(objeto_configuracion)
-                objeto_categoria=Categoria(id_cat,nombre_categoria,descripcion,c_trabajo,configs)
-                lista_objetos_categoria.append(objeto_categoria)  
+                    self.num_configuracion+=1
+                objeto_categoria=Categoria(id_cat,nombre_categoria,descripcion,c_trabajo,configs,self.num_categoria)
+                lista_objetos_categoria.append(objeto_categoria)
+                self.num_categoria+=1  
 
 
             #obtenemos los clientes
+            
             for cliente in lista_clientes:
                 global clientes_nuevos
                 self.clientes_nuevos+=1
@@ -133,8 +140,9 @@ class Leer:
                     objeto_instancia=Instancia(id_instancia,id_confi,nombre_instancia,fecha_inicio,estado,fecha_final)        
                     list_instancias.append(objeto_instancia)        
 
-                objeto_cliente=Cliente(nit,nom_cliente,usuario,clave,direccion,correo,list_instancias)
+                objeto_cliente=Cliente(nit,nom_cliente,usuario,clave,direccion,correo,list_instancias,self.num_clientes)
                 lista_objetos_clientes.append(objeto_cliente)
+                self.num_clientes+=1
 
 
         except FileNotFoundError:
@@ -158,3 +166,4 @@ class Leer:
                 listado_objetos_consumo.append(objeto_consumo)                   
         except:
             print("ARCHIVO NO EXISTE VERIFIQUE RUTA") 
+

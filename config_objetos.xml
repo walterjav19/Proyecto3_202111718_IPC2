@@ -47,6 +47,29 @@
                     </configuracion>
                 </listaConfiguraciones>
             </categoria>
+                <categoria id="Maquina Virtual">
+                <nombre> Virtual Machine </nombre>
+                <descripcion> maquina en linea</descripcion>
+                <cargaTrabajo> Baja </cargaTrabajo>
+                <listaConfiguraciones>
+                    <configuracion id="I6789">
+                        <nombre> COMPUTADORA INTEL</nombre>
+                        <descripcion> COMPUTADORA INTEL </descripcion>
+                        <recursosConfiguracion>
+                            <recurso id="HDD"> 90 </recurso>
+                            <recurso id="RAM"> 24 </recurso>
+                            <recurso id="TG"> 27 </recurso>
+                        </recursosConfiguracion>
+                    </configuracion>
+                        <configuracion id="A8978">
+                        <nombre> COMPUTADORA ASUS </nombre>
+                        <descripcion> COMPUTADORA RTX67 </descripcion>
+                        <recursosConfiguracion>
+                            <recurso id="HDD"> 10 </recurso>
+                        </recursosConfiguracion>
+                    </configuracion>
+                </listaConfiguraciones>
+            </categoria>
         </listaCategorias>
         <listaClientes>
             <cliente nit="123456789">
@@ -69,6 +92,22 @@
                         <fechaInicio> 08/10/2022</fechaInicio>
                         <estado> activo </estado>
                         <fechaFinal> 08/11/2022 </fechaFinal>
+                    </instancia>
+                </listaInstancias>
+            </cliente>
+            <cliente nit="554876">
+                <nombre> Walter </nombre>
+                <usuario> walterjav </usuario>
+                <clave> naruto23% </clave>
+                <direccion> San Miguel Petapa </direccion>
+                <correoElectronico> walterjav19@gmail.com </correoElectronico>
+                <listaInstancias>
+                    <instancia id="BI123">
+                        <idConfiguracion> I6789 </idConfiguracion>
+                        <nombre> recurso 2 </nombre>
+                        <fechaInicio> 20/10/2022</fechaInicio>
+                        <estado> INACTIVO </estado>
+                        <fechaFinal> 21/11/2022 </fechaFinal>
                     </instancia>
                 </listaInstancias>
             </cliente>

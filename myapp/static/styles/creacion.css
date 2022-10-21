@@ -1,0 +1,40 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+.navbar{
+    background: #0869e9;
+    padding: 10px 0;
+}
+
+.navbar ul{
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar ul li{
+    list-style: none;
+}
+
+.navbar ul li a{
+    color: white;
+    text-decoration: none;
+}
+
+.navbar ul li a:hover{
+    color: rgb(17, 148, 223);
+}
+
+.container{
+    max-width: 1200px;
+    padding: 20px;
+    margin: auto;
+}
+
+.card{
+    background: whitesmoke;
+    padding: 10px;
+    margin-bottom: 2px;
+    color: black;
+}
