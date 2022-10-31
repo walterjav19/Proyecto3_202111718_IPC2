@@ -5,4 +5,7 @@ class Configuracion:
         self.descripcion=descripcion
         self.lista_recursos=lista_recursos
         self.num=num
-        
+    
+
+    def set_lista_recursos(self,lista):
+        self.lista_recursos=lista

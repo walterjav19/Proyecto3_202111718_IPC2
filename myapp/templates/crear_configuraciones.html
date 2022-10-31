@@ -1,0 +1,28 @@
+{% extends 'layouts/base4.html' %}
+{% load static %}
+{% block content %}
+<h1>Crear una nueva Configuracion</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>
+        Crear
+    </button>
+</form>
+<a href="/crear_categorias">Terminar y crear Nueva Categoria</a>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+            {%  if messages %}
+              {% for m in messages %}
+                <script>
+                    Swal.fire({
+                        "title": "Creado Correctamente",
+                        "text" : "{{m}}",
+                        "icon" : "success"
+                    })
+                </script>
+              {% endfor %}
+            {% endif %}
+{% endblock %}

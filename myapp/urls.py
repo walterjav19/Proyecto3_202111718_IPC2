@@ -21,5 +21,8 @@ urlpatterns=[
     path('creacion_datos/',views.creacion_datos,name="creacion"),
     path('crear_recurso/',views.create_recurso,name="Crear_Recurso"),
     path('crear_cliente/',views.create_cliente,name="Crear_Cliente"),
-    path('crear_instancias/',views.create_instancias,name="Crear_Instancias")
+    path('crear_instancias/',views.create_instancias,name="Crear_Instancias"),
+    path('crear_categorias/',views.create_categorias,name="Crear_Categorias"),
+    path('crear_configuraciones/',views.create_configs,name="Crear_Configuraciones"),
+    path('crear_recursos_config/',views.create_Recursos_Configuraciones,name="Crear_Recurso_Config")
 ]

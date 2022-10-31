@@ -6,3 +6,6 @@ class Categoria:
         self.carga_trabajo=carga_trabajo
         self.lista_configuraciones=lista_configuraciones
         self.num=num
+    
+    def set_lista_configuraciones(self,lista):
+        self.lista_configuraciones=lista

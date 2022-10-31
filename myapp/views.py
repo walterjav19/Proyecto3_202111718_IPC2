@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 
+from .recursos_configuracion import Configuracion_Recurso
+
+from .configuracion import Configuracion
+
+from .categoria import Categoria
+
 from .instancia import Instancia
 
 from .cliente import Cliente
@@ -11,7 +17,7 @@ from .leer_xml import Leer,lista_objetos_clientes,lista_objetos_categoria,lista_
 import webbrowser as wb
 from .models import Project,Task
 from django.shortcuts import get_object_or_404,render,redirect
-from .forms import Crear_Cliente, CreateNewProject, CreateNewTask,Enviar_Mensaje, Enviar_Mensaje_consumo,Crear_recurso,Crear_Instancias
+from .forms import Crear_Cliente, CreateNewProject, CreateNewTask,Enviar_Mensaje, Enviar_Mensaje_consumo,Crear_recurso,Crear_Instancias,Crear_Categorias,Crear_Configs,Crear_recursos_config
 
 
 
@@ -136,6 +142,7 @@ direccion_c=""
 correo_c=""
 objt_cli=None
 lista_parametro=[]
+
 def create_cliente(request):
     global nit_c,nombre_c,usuario_c,clave_c,direccion_c,correo_c,objt_cli,lista_parametro
     lista_parametro=[]
@@ -186,6 +193,68 @@ def create_instancias(request):
         objt_cli.set_lista_instancias(lista_parametro)
         messages.success(request,"Revise sus Clientes e instancias")
         return redirect('Crear_Instancias')
+
+objt_cate=None
+lista_parametro_configs=[]
+n_configur=0
+def create_categorias(request):
+    global objt_cate,lista_parametro_configs,n_configur
+    lista_parametro_configs=[]
+    n_configur=0
+    if request.method== 'GET':
+        return render(request,'crear_categorias.html',{
+        'form': Crear_Categorias()
+    })
+    else:
+        id_cate=request.POST['id']
+        nombre_cate=request.POST['nombre']
+        descripcion_cate=request.POST['descripcion']
+        c_trabajo=request.POST['carga_trabajo']
+        if lista_objetos_categoria==[]:
+            objt_cate=Categoria(id_cate,nombre_cate,descripcion_cate,c_trabajo,None,0)
+        else:
+            objt_cate=Categoria(id_cate,nombre_cate,descripcion_cate,c_trabajo,None,len(lista_objetos_categoria))
+        lista_objetos_categoria.append(objt_cate)         
+        messages.success(request,"asigne configuraciones ")
+        return redirect('Crear_Configuraciones')
+
+objt_Config=None
+lista_parametro_recu=[]
+def create_configs(request):
+    global objt_cate,objt_Config,lista_parametro_configs,n_configur,lista_parametro_recu
+    lista_parametro_recu=[]
+    if request.method== 'GET':
+        return render(request,'crear_configuraciones.html',{
+        'form': Crear_Configs()
+    })
+    else:
+        id_config=request.POST['id']
+        nombre_config=request.POST['nombre']
+        descripcion_config=request.POST['descripcion']
+        objt_Config=Configuracion(id_config,nombre_config,descripcion_config,None,n_configur)
+        lista_parametro_configs.append(objt_Config)
+        objt_cate.set_lista_configuraciones(lista_parametro_configs)
+        n_configur+=1
+        messages.success(request,"asigne recursos")
+        return redirect('Crear_Recurso_Config')
+
+def create_Recursos_Configuraciones(request):
+    global objt_Config,lista_parametro_recu
+    if request.method== 'GET':
+        return render(request,'crear_recurso_config.html',{
+        'form': Crear_recursos_config()
+    })
+    else:
+        id_recur=request.POST['id']
+        cantidad=request.POST['cantidad']
+        objt=Configuracion_Recurso(id_recur,cantidad)
+        lista_parametro_recu.append(objt)
+        objt_Config.set_lista_recursos(lista_parametro_recu)
+        #print(id_recur,cantidad)
+        messages.success(request,"asigne mas recursos")
+        return redirect('Crear_Recurso_Config')
+
+
 
 def task(request):
     #task=get_object_or_404(Task,id=id)

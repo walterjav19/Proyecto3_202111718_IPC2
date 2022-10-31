@@ -41,6 +41,19 @@ class Crear_Instancias(forms.Form):
        estado=forms.ChoiceField(label="estado",choices=[('1', 'Activo'), ('2', 'Inactivo')])
        fecha_final=forms.DateField(label="Fecha Final")
        
-    
-    
+class Crear_Categorias(forms.Form):
+       id=forms.CharField(label="Id Categoria",max_length=200)
+       nombre=forms.CharField(label="nombre",max_length=200)
+       descripcion=forms.CharField(label="Descripcion de la categoria",widget=forms.Textarea)
+       carga_trabajo=forms.CharField(label="carga de trabajo",max_length=200)
+
+class Crear_Configs(forms.Form):
+       id=forms.CharField(label="Id Configuracion",max_length=200)
+       nombre=forms.CharField(label="nombre",max_length=200)
+       descripcion=forms.CharField(label="Descripcion de la configuracion",widget=forms.Textarea)
+
+class Crear_recursos_config(forms.Form):
+       id=forms.CharField(label="Id del recurso",max_length=200)
+       cantidad=forms.CharField(label="cantidad del recurso",max_length=200)
+        
     
