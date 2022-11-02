@@ -1,5 +1,7 @@
 import xml.etree.ElementTree as ET
 
+from .expresiones import encontrar_fecha,encontrar_fecha_hora
+
 from .consumo import Consumo
 
 from .cliente import Cliente
@@ -55,10 +57,19 @@ class Leer:
                     elif subelem.tag=='tipo':
                         tipo=subelem.text
                     elif subelem.tag=='valorXhora':
-                        valor=subelem.text        
+                        valor=subelem.text
+                tipo=tipo.lower()
+                tipo=tipo.strip()        
+                if tipo=="hardware" or tipo=="software":
+                    if tipo=="hardware":
+                        tipo="Hardware"
+                    else:
+                        tipo="Software"    
+                    recurso=Recurso(id_recurso,nombre,abreviatura,metrica,tipo,valor)
+                    lista_objetos_recursos.append(recurso) 
+                else:
+                    print("Error de envio no existe este tipo de Recurso")    
 
-                recurso=Recurso(id_recurso,nombre,abreviatura,metrica,tipo,valor)
-                lista_objetos_recursos.append(recurso) 
             
 
             #obtenemos las categorias
@@ -177,8 +188,32 @@ class Leer:
                                 estado=subelem.text
                             elif subelem.tag=="fechaFinal":
                                 fecha_final=subelem.text
-                        objeto_instancia=Instancia(id_instancia,id_confi,nombre_instancia,fecha_inicio,estado,fecha_final)        
-                        list_instancias.append(objeto_instancia)        
+                        estado=estado.lower()
+                        estado=estado.strip()         
+                        if estado=="vigente" or estado=="cancelada":
+                            if estado=="vigente":
+                                estado="Vigente"
+                                fecha_final="N/A"
+                                if encontrar_fecha(fecha_inicio)!=None:
+                                    fecha_inicio=encontrar_fecha(fecha_inicio)
+                                else:
+                                    fecha_inicio="N/E"    
+                            else:
+                                if encontrar_fecha(fecha_inicio)!=None:
+                                    fecha_inicio=encontrar_fecha(fecha_inicio)
+                                else:
+                                    fecha_inicio="N/E"
+
+                                if encontrar_fecha(fecha_final)!=None:       
+                                    fecha_final=encontrar_fecha(fecha_final)
+                                else:
+                                    fecha_final="N/E"    
+                                estado="Cancelada"
+                                            
+                            objeto_instancia=Instancia(id_instancia,id_confi,nombre_instancia,fecha_inicio,estado,fecha_final)        
+                            list_instancias.append(objeto_instancia)
+                        else:
+                            print("Este estado no existe")            
 
                     objeto_cliente=Cliente(nit,nom_cliente,usuario,clave,direccion,correo,list_instancias,self.num_clientes)
                     lista_objetos_clientes.append(objeto_cliente)
@@ -217,9 +252,32 @@ class Leer:
                                 estado=subelem.text
                             elif subelem.tag=="fechaFinal":
                                 fecha_final=subelem.text
-                        objeto_instancia=Instancia(id_instancia,id_confi,nombre_instancia,fecha_inicio,estado,fecha_final)        
-                        list_instancias.append(objeto_instancia)        
+                        estado=estado.lower()
+                        estado=estado.strip()         
+                        if estado=="vigente" or estado=="cancelada":
+                            if estado=="vigente":
+                                estado="Vigente"
+                                fecha_final="N/A"
+                                if encontrar_fecha(fecha_inicio)!=None:
+                                    fecha_inicio=encontrar_fecha(fecha_inicio)
+                                else:
+                                    fecha_inicio="N/E"    
+                            else:
+                                if encontrar_fecha(fecha_inicio)!=None:
+                                    fecha_inicio=encontrar_fecha(fecha_inicio)
+                                else:
+                                    fecha_inicio="N/E"
 
+                                if encontrar_fecha(fecha_final)!=None:       
+                                    fecha_final=encontrar_fecha(fecha_final)
+                                else:
+                                    fecha_final="N/E"    
+                                estado="Cancelada"
+                                            
+                            objeto_instancia=Instancia(id_instancia,id_confi,nombre_instancia,fecha_inicio,estado,fecha_final)        
+                            list_instancias.append(objeto_instancia)
+                        else:
+                            print("Este estado no existe")             
                     objeto_cliente=Cliente(nit,nom_cliente,usuario,clave,direccion,correo,list_instancias,len(lista_objetos_clientes))
                     lista_objetos_clientes.append(objeto_cliente)
                               
@@ -244,8 +302,18 @@ class Leer:
                         tiempo=subelem.text 
                     elif subelem.tag=="fechaHora":
                         fechaHora=subelem.text
-                objeto_consumo=Consumo(nit,id_instancia,tiempo,fechaHora)
-                listado_objetos_consumo.append(objeto_consumo)                   
+
+                if encontrar_fecha_hora(fechaHora)!=None:
+                    fechaHora=encontrar_fecha_hora(fechaHora)
+                    a=fechaHora.split(' ')
+                    print("Fecha: "+a[0])
+                    print("hh/min: "+a[1])        
+                    objeto_consumo=Consumo(nit,id_instancia,tiempo,a[0],a[1])
+                    listado_objetos_consumo.append(objeto_consumo)
+                    
+                else:
+                    print("No existe fecha y hora de consumo")    
+
         except:
             print("ARCHIVO NO EXISTE VERIFIQUE RUTA") 
 

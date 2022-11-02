@@ -1,5 +1,5 @@
-
-
+from django.contrib.admin.widgets import AdminDateWidget
+from django.forms.fields import DateField
 from django import forms
 
 class CreateNewTask(forms.Form):
@@ -22,7 +22,7 @@ class Crear_recurso(forms.Form):
     nombre=forms.CharField(label="Nombre",max_length=200)
     abreviatura=forms.CharField(label="Abreviatura",max_length=200)
     metrica=forms.CharField(label="Metrica",max_length=200)
-    tipo=forms.CharField(label="Tipo",max_length=200)
+    tipo=forms.ChoiceField(label="Tipo",choices=[('1', 'Hardware'), ('2', 'Software')])
     valor=forms.FloatField(label="Valor X Hora")    
     
 class Crear_Cliente(forms.Form):
@@ -38,7 +38,7 @@ class Crear_Instancias(forms.Form):
        id_config=forms.CharField(label="Id Configuracion",max_length=200)
        nombre=forms.CharField(label="nombre",max_length=200)
        fecha_inicio=forms.DateField(label="Fecha Inicio")
-       estado=forms.ChoiceField(label="estado",choices=[('1', 'Activo'), ('2', 'Inactivo')])
+       estado=forms.ChoiceField(label="estado",choices=[('1', 'Vigente'), ('2', 'Cancelada')])
        fecha_final=forms.DateField(label="Fecha Final")
        
 class Crear_Categorias(forms.Form):
@@ -56,4 +56,7 @@ class Crear_recursos_config(forms.Form):
        id=forms.CharField(label="Id del recurso",max_length=200)
        cantidad=forms.CharField(label="cantidad del recurso",max_length=200)
         
-    
+class Facturacion(forms.Form):
+    start_date=forms.DateField(label="Fecha Inicial",widget = forms.SelectDateWidget(years=range(1900,2100)))
+    end_date=forms.DateField(label="Fecha Final",widget = forms.SelectDateWidget(years=range(1900,2100)))
+           

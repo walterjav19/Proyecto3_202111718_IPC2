@@ -24,5 +24,8 @@ urlpatterns=[
     path('crear_instancias/',views.create_instancias,name="Crear_Instancias"),
     path('crear_categorias/',views.create_categorias,name="Crear_Categorias"),
     path('crear_configuraciones/',views.create_configs,name="Crear_Configuraciones"),
-    path('crear_recursos_config/',views.create_Recursos_Configuraciones,name="Crear_Recurso_Config")
+    path('crear_recursos_config/',views.create_Recursos_Configuraciones,name="Crear_Recurso_Config"),
+    path('proceso_facturacion/',views.proceso_facturacion,name="Facturacion"),
+    path('facturas/',views.mostrar_clientes_facturar,name="c_facturas"),
+    path('mostrar_factura/<int:num>',views.mostrar_factura_individual,name="fac_indi")
 ]

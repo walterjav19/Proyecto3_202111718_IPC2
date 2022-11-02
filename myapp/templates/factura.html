@@ -1,0 +1,11 @@
+{% extends 'layouts/base2.html' %}
+{% load static %}
+{% block content %}
+
+<h1>Factura del Cliente</h1>
+
+<h3>Correlativo: {{factura.correlativo}}</h3>
+<h3>NIT: {{factura.nit}}</h3>
+<h3>Fecha: {{f_date}}</h3>
+<h3>Monto Total: 0.00 Q</h3>
+{% endblock %}

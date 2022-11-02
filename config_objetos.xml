@@ -5,21 +5,21 @@
                 <nombre> Memoria Ram </nombre>
                 <abreviatura> Memoria Ram </abreviatura>
                 <metrica> Gb </metrica>
-                <tipo> Memoria Primaria </tipo>
+                <tipo> Hardware </tipo>
                 <valorXhora> 0.75 </valorXhora>
             </recurso>
             <recurso id="HDD">
                 <nombre> Disco Duro </nombre>
                 <abreviatura> HDD </abreviatura>
                 <metrica> Gb </metrica>
-                <tipo> Memoria Secundaria </tipo>
+                <tipo> Hardware </tipo>
                 <valorXhora> 1.5 </valorXhora>
             </recurso>
             <recurso id="TG">
                 <nombre> Tarjeta Grafica </nombre>
                 <abreviatura> TG </abreviatura>
                 <metrica> Gb </metrica>
-                <tipo> Memoria Desconocida </tipo>
+                <tipo> Hardware </tipo>
                 <valorXhora> 4.5 </valorXhora>
             </recurso>
         </listaRecursos>
@@ -83,14 +83,14 @@
                         <idConfiguracion> COMSEM </idConfiguracion>
                         <nombre> recurso 1 </nombre>
                         <fechaInicio> 08/10/2022</fechaInicio>
-                        <estado> activo </estado>
+                        <estado> Vigente </estado>
                         <fechaFinal> 08/11/2022 </fechaFinal>
                     </instancia>
                     <instancia id="BBB">
                         <idConfiguracion> COMGAM </idConfiguracion>
                         <nombre> recurso 1 </nombre>
                         <fechaInicio> 08/10/2022</fechaInicio>
-                        <estado> activo </estado>
+                        <estado> Vigente </estado>
                         <fechaFinal> 08/11/2022 </fechaFinal>
                     </instancia>
                 </listaInstancias>
@@ -106,7 +106,7 @@
                         <idConfiguracion> I6789 </idConfiguracion>
                         <nombre> recurso 2 </nombre>
                         <fechaInicio> 20/10/2022</fechaInicio>
-                        <estado> INACTIVO </estado>
+                        <estado> Cancelada </estado>
                         <fechaFinal> 21/11/2022 </fechaFinal>
                     </instancia>
                 </listaInstancias>

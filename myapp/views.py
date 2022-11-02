@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 
+from .expresiones import verificar_fecha,generar_numero
+
 from .recursos_configuracion import Configuracion_Recurso
 
 from .configuracion import Configuracion
@@ -17,7 +19,7 @@ from .leer_xml import Leer,lista_objetos_clientes,lista_objetos_categoria,lista_
 import webbrowser as wb
 from .models import Project,Task
 from django.shortcuts import get_object_or_404,render,redirect
-from .forms import Crear_Cliente, CreateNewProject, CreateNewTask,Enviar_Mensaje, Enviar_Mensaje_consumo,Crear_recurso,Crear_Instancias,Crear_Categorias,Crear_Configs,Crear_recursos_config
+from .forms import Crear_Cliente, CreateNewProject, CreateNewTask,Enviar_Mensaje, Enviar_Mensaje_consumo,Crear_recurso,Crear_Instancias,Crear_Categorias,Crear_Configs,Crear_recursos_config,Facturacion
 
 
 
@@ -76,6 +78,53 @@ def mensaje_consumo(request):
 
 def operaciones_sistema(request):
     return render(request,"operaciones_sistema.html")
+final_date=""
+consumos_rango_fechas=[]
+def proceso_facturacion(request):
+    if request.method== 'GET':
+        return render(request,"proceso_facturacion.html",{
+            'form':Facturacion()
+        })
+    else:
+        global consumos_rango_fechas,final_date
+        consumos_rango_fechas=[]
+        start_month=request.POST['start_date_month']
+        start_day=request.POST['start_date_day']
+        start_year=request.POST['start_date_year']
+        start_date=f'{start_day}/{start_month}/{start_year}'
+        final_month=request.POST['end_date_month']
+        final_day=request.POST['end_date_day']
+        final_year=request.POST['end_date_year']
+        final_date=f'{final_day}/{final_month}/{final_year}'
+        print(start_date+" -> "+final_date)
+        i=0        
+        for consumo in listado_objetos_consumo:
+            if verificar_fecha(start_date,final_date,consumo.fecha)==True:
+                consumos_rango_fechas.append(consumo)
+                corr=generar_numero()
+                consumo.set_n_factura(corr)
+                consumo.set_n(i)
+                i+=1
+            else:
+                pass    
+        return redirect('c_facturas')
+
+
+
+
+def mostrar_clientes_facturar(request):
+    global consumos_rango_fechas
+    if request.method== 'GET':
+        return render(request,"facturas.html",{
+        'facturas':consumos_rango_fechas
+        })
+    
+def mostrar_factura_individual(request,num):
+    return render(request,"factura.html",{
+        'factura':consumos_rango_fechas[num],
+        'f_date': final_date
+    })
+
 
 def datos(request):
     return render(request,"datos.html")
@@ -129,6 +178,10 @@ def create_recurso(request):
         metrica=request.POST['metrica']
         tipo=request.POST['tipo']
         valor=request.POST['valor']
+        if tipo=='1':
+            tipo="Hardware"
+        else:
+            tipo="Software"   
         objeto_recurso=Recurso(id,nombre,abreviatura,metrica,tipo,valor)
         lista_objetos_recursos.append(objeto_recurso)
         messages.success(request,"Revise sus recursos")
@@ -183,11 +236,13 @@ def create_instancias(request):
         nombre=request.POST['nombre']
         fecha_Inicio=request.POST['fecha_inicio']
         estado=request.POST['estado']
-        if estado=='1':
-            estado="Activo"
-        else:
-            estado="Inactivo"    
         Fecha_Final=request.POST['fecha_final']
+        if estado=='1':
+            estado="Vigente"
+            Fecha_Final="N/A"
+        else:
+            estado="Cancelada"    
+        
         objt_instancia=Instancia(id_instancia,id_Configuracion,nombre,fecha_Inicio,estado,Fecha_Final)
         lista_parametro.append(objt_instancia)
         objt_cli.set_lista_instancias(lista_parametro)

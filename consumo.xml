@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
     <listadoConsumos>
         <consumo nitCliente="123456789" idInstancia="AAA">
-            <tiempo> tiempoConsumido </tiempo>
-            <fechaHora> $descripcionFechaHora </fechaHora>
+            <tiempo> 1.75 </tiempo>
+            <fechaHora> 1/11/2022 24:34 </fechaHora>
         </consumo>  
     </listadoConsumos>
