@@ -10,4 +10,7 @@ class Consumo:
         self.correlativo=correlativo    
 
     def set_n(self,n):
-        self.n=n      
+        self.n=n
+
+    def set_Consumo(self,consumo):
+        self.consumo=consumo          

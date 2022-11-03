@@ -97,13 +97,27 @@ def proceso_facturacion(request):
         final_year=request.POST['end_date_year']
         final_date=f'{final_day}/{final_month}/{final_year}'
         print(start_date+" -> "+final_date)
-        i=0        
+        i=0
         for consumo in listado_objetos_consumo:
+            monto=0
             if verificar_fecha(start_date,final_date,consumo.fecha)==True:
                 consumos_rango_fechas.append(consumo)
                 corr=generar_numero()
                 consumo.set_n_factura(corr)
                 consumo.set_n(i)
+                for cliente in lista_objetos_clientes:
+                    if cliente.nit==consumo.nit:
+                        for inst in cliente.lista_instancias:
+                            if inst.id==consumo.id_instancia:
+                                for categoria in lista_objetos_categoria:
+                                    for configuracion in categoria.lista_configuraciones:
+                                        if configuracion.id.split()==inst.idconfig.split():
+                                            for recurso_confi in configuracion.lista_recursos:
+                                                for recurso in lista_objetos_recursos:
+                                                    if recurso_confi.id.split()==recurso.id.split():
+                                                        monto+=float(recurso_confi.cantidad)*consumo.tiempo*recurso.valor
+                    
+                consumo.set_Consumo(monto)
                 i+=1
             else:
                 pass    

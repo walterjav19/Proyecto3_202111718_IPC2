@@ -1,6 +1,8 @@
 import re
 import random
 from datetime import datetime
+
+
 def encontrar_fecha(string):
     x = re.search(r"(\d{2}|\d{1})(/|.|-)(\d{2}|\d{1})(/|.|-)(\d{4})", string)
     if x is not None:
